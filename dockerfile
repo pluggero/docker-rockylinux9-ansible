@@ -38,6 +38,9 @@ RUN pip3 install $pip_packages
 # Disable requiretty.
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
 
+# Configure sudo access for ansible user with password requirement
+RUN echo "ansible ALL=(ALL:ALL) ALL" > /etc/sudoers.d/ansible
+
 # Create ansible user with home directory
 RUN useradd -m -s /bin/bash ansible \
     && echo "ansible:ansible" | chpasswd
